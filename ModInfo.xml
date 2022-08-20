@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+	<ModInfo>
+		<Name value="Dishong Tower Challenge Enforcer" />
+		<Description value="Mod to enforce Dishong Tower Challange Rules." />
+		<Website value="https://github.com/OCB7D2D/DishongTowerChallengeEnforcer" />
+		<Author value="ocbMaurice" />
+		<Version value="0.1.0" compat="A20"/>
+	</ModInfo>
+</xml>
