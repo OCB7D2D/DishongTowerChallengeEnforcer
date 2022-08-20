@@ -19,11 +19,26 @@ public class DishongTowerChallengeEnforcer : IModApi
 
     static float Waited = 0;
     static bool InPrefabCopy = false;
+    static bool AllowRadiationCVar = false;
 
     static bool IsInsideTower(Vector3i pos)
     {
         return pos.x >= -139 && pos.x <= -103
             && pos.z >= -380 && pos.z <= -344;
+    }
+
+
+    // Skip regular radiation cvar set
+    [HarmonyPatch(typeof(EntityBuffs))]
+    [HarmonyPatch("SetCustomVar")]
+    public class EntityBuffs_SetCustomVar
+    {
+        static bool Prefix(
+            ref string _name)
+        {
+            if (AllowRadiationCVar) return true;
+            return _name != "_biomeradiation";
+        }
     }
 
     // Check player position to limit position
@@ -44,22 +59,29 @@ public class DishongTowerChallengeEnforcer : IModApi
             ulong age = __instance.world.worldTime
                 - __instance.WorldTimeBorn;
 
-            // Give 90 seconds to enter tower
-            if (age < 90.0) return;
+            // Calculate timed radiation level
+            float radiation = age / 150f;
+            radiation = Mathf.Max(0f, radiation);
+            radiation = Mathf.Min(900f, radiation);
 
             // Get Block position of player
             Vector3i pos = __instance.GetBlockPosition();
 
-            // Allow to move inside tower
-            if (IsInsideTower(pos)) return;
+            // Allow to move inside tower and above ground
+            if (IsInsideTower(pos) || pos.y > Ground) radiation = 0;
 
-            // Allow to move above ground level
-            if (pos.y > Ground) return;
+            // Update the radiation level
+            AllowRadiationCVar = true;
+            __instance.Buffs.SetCustomVar(
+                "_biomeradiation",
+                radiation == 0 ? 0 : 255f);
+            AllowRadiationCVar = false;
 
             // Otherwise hurt the player constantly until he is back in or dies
             // Add a Grace Period for when you are just starting out
             __instance.DamageEntity(DamageSource.radiation,
-                age < 150.0 ? 1 : HurtPerIv, false, 1f);
+                (int)(Mathf.Min(HurtPerIv, radiation - 1)),
+                false, 1f);
         }
     }
 
