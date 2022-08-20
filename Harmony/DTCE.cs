@@ -18,7 +18,6 @@ public class DishongTowerChallengeEnforcer : IModApi
     }
 
     static float Waited = 0;
-    static float Running = 0;
     static bool InPrefabCopy = false;
 
     static bool IsInsideTower(Vector3i pos)
@@ -35,25 +34,32 @@ public class DishongTowerChallengeEnforcer : IModApi
         static void Postfix(EntityPlayerLocal __instance)
         {
 
-            Running += Time.deltaTime;
-            Waited += Time.deltaTime;
-            // Give 15 seconds to enter building
-            if (Running < 15.0) return;
-            
+
             // Wait for update interval
+            Waited += Time.deltaTime;
             if (Waited < Interval) return;
             Waited -= Interval;
+
+            // Get age of player for grace period
+            ulong age = __instance.world.worldTime
+                - __instance.WorldTimeBorn;
+
+            // Give 90 seconds to enter tower
+            if (age < 90.0) return;
 
             // Get Block position of player
             Vector3i pos = __instance.GetBlockPosition();
 
-            // Above ground level?
+            // Allow to move inside tower
+            if (IsInsideTower(pos)) return;
+
+            // Allow to move above ground level
             if (pos.y > Ground) return;
 
             // Otherwise hurt the player constantly until he is back in or dies
             // Add a Grace Period for when you are just starting out
             __instance.DamageEntity(DamageSource.radiation,
-                Running < 30.0 ? 1 : HurtPerIv, false, 1f);
+                age < 150.0 ? 1 : HurtPerIv, false, 1f);
         }
     }
 
