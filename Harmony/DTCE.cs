@@ -6,9 +6,12 @@ using UnityEngine;
 public class DishongTowerChallengeEnforcer : IModApi
 {
 
-    static int Ground = 61;
-    static int HurtPerIv = 3;
-    static float Interval = 0.25f;
+    static readonly int Ground = 41;
+    static readonly Vector2i TowerX = new Vector2i(11, 47);
+    static readonly Vector2i TowerY = new Vector2i(11, 47);
+
+    static readonly int HurtPerIv = 3;
+    static readonly float Interval = 0.25f;
     
     public void InitMod(Mod mod)
     {
@@ -23,8 +26,8 @@ public class DishongTowerChallengeEnforcer : IModApi
 
     static bool IsInsideTower(Vector3i pos)
     {
-        return pos.x >= -139 && pos.x <= -103
-            && pos.z >= -380 && pos.z <= -344;
+        return pos.x >= TowerX.x && pos.x <= TowerX.y
+            && pos.z >= TowerY.x && pos.z <= TowerY.y;
     }
 
 
@@ -94,6 +97,8 @@ public class DishongTowerChallengeEnforcer : IModApi
             Vector3i blockPos,
             ref bool __result)
         {
+            // Used to determine exact tower positions
+            // Log.Out("Check CanPlaceAt {0}", blockPos);
             if (InPrefabCopy) return;
             if (__result == false) return;
             // Only allow if two above ground
