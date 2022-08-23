@@ -30,6 +30,12 @@ public class DishongTowerChallengeEnforcer : IModApi
             && pos.z >= TowerY.x && pos.z <= TowerY.y;
     }
 
+    static bool IsInSafeArea(Vector3i pos)
+    {
+        return IsInsideTower(pos) ||
+            // Allow users to be within trader area without being hurt
+            GameManager.Instance.World.GetTraderAreaAt(pos) != null;
+    }
 
     // Skip regular radiation cvar set
     [HarmonyPatch(typeof(EntityBuffs))]
@@ -71,7 +77,9 @@ public class DishongTowerChallengeEnforcer : IModApi
             Vector3i pos = __instance.GetBlockPosition();
 
             // Allow to move inside tower and above ground
-            if (IsInsideTower(pos) || pos.y > Ground) radiation = 0;
+            if (IsInSafeArea(pos) || pos.y > Ground ||
+                // Allow to be outside when in/on a vehicles
+                __instance.AttachedToEntity != null) radiation = 0;
 
             // Update the radiation level
             AllowRadiationCVar = true;
@@ -103,7 +111,7 @@ public class DishongTowerChallengeEnforcer : IModApi
             if (__result == false) return;
             // Only allow if two above ground
             __result = blockPos.y > Ground + 1
-                || IsInsideTower(blockPos);
+                || IsInSafeArea(blockPos);
         }
     }
 
@@ -119,7 +127,7 @@ public class DishongTowerChallengeEnforcer : IModApi
             {
                 if (!change.bChangeBlockValue) return false;
                 if (change.blockValue.isair) return false;
-                if (IsInsideTower(change.pos)) return false;
+                if (IsInSafeArea(change.pos)) return false;
                 return change.pos.y < Ground + 1;
             });
         }
