@@ -21,6 +21,8 @@ No cheating allowed; OK, you can still enable cheat mode; but seriously, obey th
 
 ![In Game Teaser](Screens/teaser.jpg)
 
+![In Game Win Message](Screens/win-message.jpg)
+
 [![GitHub CI Compile Status][4]][3]
 
 ## Future ideas
