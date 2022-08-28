@@ -1,0 +1,16 @@
+﻿<configs>
+
+	<append xpath="/windows">
+
+		<window name="DishongTowerChallange" depth="20" pos="-300,300" width="600" height="400" controller="DTCE, DTCE">
+			<panel name="header" pos="0,0" height="43" width="600" depth="1" backgroundspritename="ui_game_panel_header" bordercolor="[black]" borderthickness="3">
+				<label style="header.name" text="Dishong Tower Challenge" text_key="xuiDTCETitle" />
+			</panel>
+			<panel pos="0,-50" size="600,350" depth="2" backgroundcolor="[darkGrey]" bordercolor="[black]" borderthickness="3">
+				<label pos="0,-170" depth="3" width="100%" height="340" text="{description}" justify="center" pivot="left" font_size="28" />
+			</panel>
+		</window>
+
+	</append>
+
+</configs>

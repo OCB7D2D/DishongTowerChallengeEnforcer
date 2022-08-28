@@ -1,0 +1,11 @@
+﻿<configs>
+
+	<append xpath="/xui/ruleset">
+
+		<window_group name="DishongTowerChallange" >
+			<window name="DishongTowerChallange" />
+		</window_group>
+
+	</append>
+
+</configs>

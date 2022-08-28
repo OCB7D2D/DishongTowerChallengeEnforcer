@@ -91,13 +91,18 @@
   <ItemGroup>
     <Compile Include="Harmony\DTCE.cs" />
     <Compile Include="Harmony\AssemblyInfo.cs" />
+    <Compile Include="Harmony\XUiC_DTCE.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\blocks.xml" />
     <Content Include="Config\Localization.txt" />
+    <Content Include="Config\XUi\windows.xml" />
+    <Content Include="Config\XUi\xui.xml" />
     <Content Include="ModInfo.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

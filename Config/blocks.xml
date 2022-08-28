@@ -1,0 +1,24 @@
+<configs>
+
+	<append xpath="/blocks">
+
+		<block name="ConfigDishongTowerChallenge">
+
+			<!-- needed for base parser to not spout any NPEs -->
+			<property name="Extends" value="terrDesertGround"/>
+
+			<property name="TowerGround" value="41" />
+			<property name="TowerPosMinX" value="11" />
+			<property name="TowerPosMaxX" value="47" />
+			<property name="TowerPosMinY" value="11" />
+			<property name="TowerPosMaxY" value="47" />
+			<property name="TowerSpawnX" value="29.5" />
+			<property name="TowerSpawnY" value="41.5" />
+			<property name="TowerSpawnZ" value="51.5" />
+			<property name="TowerSpawnRot" value="180" />
+
+		</block>
+			
+	</append>
+
+</configs>

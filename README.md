@@ -2,6 +2,8 @@
 
 A small harmony mod to enforce Dishong Tower Challenge Rules.
 
+Requires https://www.nexusmods.com/7daystodie/mods/2310
+
 It's meant for all people that can't enforce virtual rules on their own :)
 It will physically punish you for not obeying the rules as set out by the challenge!
 No cheating allowed; OK, you can still enable cheat mode; but seriously, obey the rules :)
